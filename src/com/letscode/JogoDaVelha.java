@@ -19,8 +19,7 @@ public class JogoDaVelha {
             System.out.print("Informe uma posição de 1 a 9 para sua jogada: ");
             int jogada = Integer.parseInt(sc.nextLine());
             boolean possibilidade = checarPosicao(jogada,tabuleiro);
-            acabou = checkVitoria(tabuleiro);
-            if(!possibilidade && !acabou) {
+            if(!possibilidade) {
                 while (!possibilidade){
                     System.out.print("Essa posição já foi escolhida, favor informar outra: ");
                     jogada = Integer.parseInt(sc.nextLine());

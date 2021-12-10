@@ -13,14 +13,14 @@ public class JogoDaVelha {
         };
 
         Scanner sc = new Scanner(System.in);
-
+        boolean acabou = checkVitoria(tabuleiro);
         printTabuleiro(tabuleiro);
         while (!acabou){
             System.out.print("Informe uma posição de 1 a 9 para sua jogada: ");
             int jogada = Integer.parseInt(sc.nextLine());
             boolean possibilidade = checarPosicao(jogada,tabuleiro);
-            checkVitoria(tabuleiro);
-            if(!possibilidade) {
+            acabou = checkVitoria(tabuleiro);
+            if(!possibilidade && !acabou) {
                 while (!possibilidade){
                     System.out.print("Essa posição já foi escolhida, favor informar outra: ");
                     jogada = Integer.parseInt(sc.nextLine());
@@ -29,15 +29,16 @@ public class JogoDaVelha {
                 System.out.println("-------------------------------");
                 atualizarTabuleiro(jogada, 1, tabuleiro);
                 System.out.println("-------------------------------");
-                checkVitoria(tabuleiro);
+                acabou = checkVitoria(tabuleiro);
             }else{
                 System.out.println("-------------------------------");
                 atualizarTabuleiro(jogada, 1, tabuleiro);
                 System.out.println("-------------------------------");
-                checkVitoria(tabuleiro);
+                acabou = checkVitoria(tabuleiro);
             }
             if(!acabou){
                 jogadaPC(tabuleiro);
+                acabou = checkVitoria(tabuleiro);
                 System.out.println("-------------------------------");
             }
         }
@@ -57,86 +58,94 @@ public class JogoDaVelha {
         boolean check = checarPosicao(movimento,tabuleiro);
         if(check){
             atualizarTabuleiro(movimento,2,tabuleiro);
-            checkVitoria(tabuleiro);
         }else{
             jogadaPC(tabuleiro);
         }
     }
 
-    static boolean acabou = false;
-    public static void checkVitoria(char[][] tabuleiro){
+
+    public static boolean checkVitoria(char[][] tabuleiro){
         if(tabuleiro[0][0] == tabuleiro[0][2] && tabuleiro[0][2] == tabuleiro[0][4]){
             if(tabuleiro[0][0]=='x'){
                 System.out.println("Jogador 1 Venceu!");
-                acabou = true;
+                return true;
             }else if (tabuleiro[0][0]=='o'){
                 System.out.println("PC Venceu!");
-                acabou = true;
+                return true;
             }
         }
         if(tabuleiro[1][0] == tabuleiro[1][2] && tabuleiro[1][2] == tabuleiro[1][4]){
             if(tabuleiro[1][0]=='x'){
                 System.out.println("Jogador 1 Venceu!");
-                acabou = true;
+                return true;
             }else if (tabuleiro[1][0]=='o'){
                 System.out.println("PC Venceu!");
-                acabou = true;
+                return true;
             }
         }
         if(tabuleiro[2][0] == tabuleiro[2][2] && tabuleiro[2][2] == tabuleiro[2][4]){
             if(tabuleiro[2][0]=='x'){
                 System.out.println("Jogador 1 Venceu!");
-                acabou = true;
+                return true;
             }else if (tabuleiro[2][0]=='o'){
                 System.out.println("PC Venceu!");
-                acabou = true;
+                return true;
             }
         }
         if(tabuleiro[0][0] == tabuleiro[1][2] && tabuleiro[1][2] == tabuleiro[2][4]){
             if(tabuleiro[0][0]=='x'){
                 System.out.println("Jogador 1 Venceu!");
-                acabou = true;
+                return true;
             }else if (tabuleiro[0][0]=='o'){
                 System.out.println("PC Venceu!");
-                acabou = true;
+                return true;
             }
         }
         if(tabuleiro[0][0] == tabuleiro[1][0] && tabuleiro[1][0] == tabuleiro[2][0]){
             if(tabuleiro[0][0]=='x'){
                 System.out.println("Jogador 1 Venceu!");
-                acabou = true;
+                return true;
             }else if (tabuleiro[0][0]=='o'){
                 System.out.println("PC Venceu!");
-                acabou = true;
+                return true;
             }
         }
         if(tabuleiro[0][2] == tabuleiro[1][2] && tabuleiro[1][2] == tabuleiro[2][2]){
             if(tabuleiro[0][2]=='x'){
                 System.out.println("Jogador 1 Venceu!");
-                acabou = true;
+                return true;
             }else if (tabuleiro[0][2]=='o'){
                 System.out.println("PC Venceu!");
-                acabou = true;
+                return true;
             }
         }
         if(tabuleiro[0][4] == tabuleiro[1][4] && tabuleiro[1][4] == tabuleiro[2][4]){
             if(tabuleiro[0][4]=='x'){
                 System.out.println("Jogador 1 Venceu!");
-                acabou = true;
+                return true;
             }else if (tabuleiro[0][4]=='o'){
                 System.out.println("PC Venceu!");
-                acabou = true;
+                return true;
             }
         }
         if(tabuleiro[0][4] == tabuleiro[1][2] && tabuleiro[1][2] == tabuleiro[2][0]){
             if(tabuleiro[0][4]=='x'){
                 System.out.println("Jogador 1 Venceu!");
-                acabou = true;
+                return true;
             }else if (tabuleiro[0][4]=='o'){
                 System.out.println("PC Venceu!");
-                acabou = true;
+                return true;
             }
         }
+        for (char[] linha : tabuleiro) {
+            for (int j = 0; j < linha.length; j += 2) {
+                if (linha[j] == '_') {
+                    return false;
+                }
+            }
+        }
+        System.out.println("Não houve vencedor!");
+        return true;
     }
 
     public static boolean checarPosicao(int posicao, char[][] tabuleiro){
